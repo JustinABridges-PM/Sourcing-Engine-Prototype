@@ -1,0 +1,1516 @@
+[
+  {
+    "order_id": "O-1001",
+    "merchant": "PEAK",
+    "sku": "TENT-1",
+    "promised": "2026-11-04",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "ATL",
+      "service": "Ground",
+      "cost": 5,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-02",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 0,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {},
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-08",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 08, 4 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 45,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $40 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $15 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $25 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $5 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $10 more than chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1002",
+    "merchant": "PEAK",
+    "sku": "TENT-1",
+    "promised": "2026-11-03",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "PHX",
+      "service": "Ground",
+      "cost": 5,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-02",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 0,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {},
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $5 more than chosen"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $10 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $15 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $25 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-08",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 08, 5 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 45,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $40 more than chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1003",
+    "merchant": "PEAK",
+    "sku": "TENT-1",
+    "promised": "2026-11-02",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "DAL",
+      "service": "Ground",
+      "cost": 5,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-02",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 0,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {},
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $25 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $5 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $10 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $25 more than chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1013",
+    "merchant": "PEAK",
+    "sku": "TENT-1",
+    "promised": "2026-10-31",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "ATL",
+      "service": "Express",
+      "cost": 15,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-10-31",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 10,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {},
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-08",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 08, 8 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 5 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 45,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 02, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 5 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 01, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 02, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 01, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1004",
+    "merchant": "BLOOM",
+    "sku": "SERUM-1",
+    "promised": "2026-11-02",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "ATL",
+      "service": "Ground",
+      "cost": 5,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-02",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 0,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "PHX": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1005 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1005 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": true,
+        "reasons": [
+          "cost $30 above merchant cap $25"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $5 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $10 more than chosen"
+        ]
+      }
+    ],
+    "notes": [
+      "Contested stock: resolved together with O-1005, O-1006 (exact search). Joint assignment keeps 2 of 3 promises at $30 total.",
+      "Holds the contested unit at ATL; O-1005 re-sourced elsewhere."
+    ],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1005",
+    "merchant": "BLOOM",
+    "sku": "SERUM-1",
+    "promised": "2026-10-31",
+    "status": "AT_RISK",
+    "chosen": {
+      "fc": "DAL",
+      "service": "Air",
+      "cost": 20,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-03",
+      "meets_date": false,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 15,
+    "revised_edd": "2026-11-03",
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "PHX": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 5 day(s) late",
+          "arrives later than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": false,
+        "over_cap": true,
+        "reasons": [
+          "cost $30 above merchant cap $25",
+          "arrives Nov 01, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1004, O-1006 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1004, O-1006 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1004, O-1006 in the same batch (joint resolution)"
+        ]
+      }
+    ],
+    "notes": [
+      "Contested stock: resolved together with O-1004, O-1006 (exact search). Joint assignment keeps 2 of 3 promises at $30 total.",
+      "Individually best option ATL Express was lost: ATL stock went to O-1004, O-1006.",
+      "the only on-time options were at FCs whose stock went to other orders in the batch; shipped earliest remaining option and flagged"
+    ],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1006",
+    "merchant": "BLOOM",
+    "sku": "SERUM-1",
+    "promised": "2026-11-02",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "ATL",
+      "service": "Ground",
+      "cost": 5,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-02",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 0,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "PHX": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1005 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1005 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": true,
+        "reasons": [
+          "cost $30 above merchant cap $25"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $5 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $10 more than chosen"
+        ]
+      }
+    ],
+    "notes": [
+      "Contested stock: resolved together with O-1004, O-1005 (exact search). Joint assignment keeps 2 of 3 promises at $30 total.",
+      "Holds the contested unit at ATL; O-1005 re-sourced elsewhere."
+    ],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1007",
+    "merchant": "DESERT",
+    "sku": "TEE-1",
+    "promised": "2026-11-08",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "PHX",
+      "service": "Ground",
+      "cost": 15,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-08",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 0,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "DAL": "insufficient stock (available 0, need 1)",
+      "ATL": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-08",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $15 more than chosen"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 45,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $30 more than chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1008",
+    "merchant": "DESERT",
+    "sku": "TEE-1",
+    "promised": "2026-11-03",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "PHX",
+      "service": "Air",
+      "cost": 20,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-03",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 10,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "DAL": "insufficient stock (available 0, need 1)",
+      "ATL": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $10 more than chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1009",
+    "merchant": "DESERT",
+    "sku": "TEE-1",
+    "promised": "2026-11-02",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "PHX",
+      "service": "Express",
+      "cost": 45,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-02",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 30,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "DAL": "insufficient stock (available 0, need 1)",
+      "ATL": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-08",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 08, 6 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 45,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1010",
+    "merchant": "HARBOR",
+    "sku": "BEANS-1",
+    "promised": "2026-10-31",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "ATL",
+      "service": "Express",
+      "cost": 15,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-10-31",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 10,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "PHX": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1011, O-1012 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1011, O-1012 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "DAL stock allocated to O-1011, O-1012 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 02, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 01, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      }
+    ],
+    "notes": [
+      "Contested stock: resolved together with O-1011, O-1012 (exact search). Joint assignment keeps 3 of 3 promises at $75 total.",
+      "Holds the contested unit at ATL; O-1011 re-sourced elsewhere."
+    ],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1011",
+    "merchant": "HARBOR",
+    "sku": "BEANS-1",
+    "promised": "2026-11-02",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "DAL",
+      "service": "Express",
+      "cost": 30,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-01",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 25,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "PHX": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1010 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1010 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1010 in the same batch (joint resolution)"
+        ]
+      }
+    ],
+    "notes": [
+      "Contested stock: resolved together with O-1010, O-1012 (exact search). Joint assignment keeps 3 of 3 promises at $75 total.",
+      "Individually best option ATL Ground was lost: ATL stock went to O-1010."
+    ],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1012",
+    "merchant": "HARBOR",
+    "sku": "BEANS-1",
+    "promised": "2026-11-01",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "DAL",
+      "service": "Express",
+      "cost": 30,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-01",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 20,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {
+      "PHX": "insufficient stock (available 0, need 1)"
+    },
+    "options": [
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 4 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 2 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-08",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1010 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "ATL stock allocated to O-1010 in the same batch (joint resolution)"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 45,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-02",
+        "meets_date": false,
+        "over_cap": true,
+        "reasons": [
+          "cost $45 above merchant cap $30",
+          "arrives Nov 02, 1 day(s) late"
+        ]
+      }
+    ],
+    "notes": [
+      "Contested stock: resolved together with O-1010, O-1011 (exact search). Joint assignment keeps 3 of 3 promises at $75 total."
+    ],
+    "reshopped_from": null,
+    "explanation_complete": true
+  },
+  {
+    "order_id": "O-1014",
+    "merchant": "PEAK",
+    "sku": "TENT-1",
+    "promised": "2026-11-02",
+    "status": "ON_TIME",
+    "chosen": {
+      "fc": "DAL",
+      "service": "Air",
+      "cost": 10,
+      "ship_date": "2026-10-30",
+      "arrival": "2026-11-01",
+      "meets_date": true,
+      "over_cap": false,
+      "reasons": [
+        "chosen"
+      ]
+    },
+    "promise_premium": 5,
+    "revised_edd": null,
+    "cost_to_meet_date_over_cap": null,
+    "removed_fcs": {},
+    "options": [
+      {
+        "fc": "PHX",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "PHX",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $20 more than chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Ground",
+        "cost": 5,
+        "ship_date": "2026-10-31",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Air",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "chosen"
+        ]
+      },
+      {
+        "fc": "DAL",
+        "service": "Express",
+        "cost": 15,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-10-31",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $5 more than chosen"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Ground",
+        "cost": 10,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-05",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 05, 3 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Air",
+        "cost": 20,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-03",
+        "meets_date": false,
+        "over_cap": false,
+        "reasons": [
+          "arrives Nov 03, 1 day(s) late"
+        ]
+      },
+      {
+        "fc": "ATL",
+        "service": "Express",
+        "cost": 30,
+        "ship_date": "2026-10-30",
+        "arrival": "2026-11-01",
+        "meets_date": true,
+        "over_cap": false,
+        "reasons": [
+          "meets date but costs $20 more than chosen"
+        ]
+      }
+    ],
+    "notes": [],
+    "reshopped_from": null,
+    "explanation_complete": true
+  }
+]
