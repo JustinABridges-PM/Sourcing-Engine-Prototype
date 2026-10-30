@@ -9,7 +9,7 @@ Case Study
 - **Main risk:** Competing orders are only decided together within a batch window, and the window length is not yet set (see 5.4 and 6.0).
 
 1.0 OVERVIEW
-ShipBob supports thousands of ecommerce brands through a network of 60+ fulfillment centers across the US, Canada, the UK, the EU, and Australia, processing roughly 100 million orders annually. The value of that network depends on the sourcing decision made for each order, and that decision is getting harder: 58.65% of brands already use more than one fulfillment center, and 43.99% plan to add more in 2026.
+ShipBob supports thousands of ecommerce brands through a network of 50+ fulfillment centers. The value of that network depends on the sourcing decision made for each order, and that decision is getting harder: 58.65% of brands already use more than one fulfillment center, and 43.99% plan to increase the number they use in 2026 (ShipBob, 2026 State of Ecommerce Fulfillment Report, Feb 9, 2026).
 
 1.1 PROBLEM STATEMENT 
 When an order is placed, the sourcing decision determines whether the shopper receives it on the promised date and what the merchant pays to ship it.
@@ -65,6 +65,18 @@ End customer: Shoppers who are given a delivery date at checkout and expect to r
 - Live carrier rates are not looked up. A fixed rate card keeps decisions repeatable and testable. Live rates are a later integration.
 - Inventory transfers between FCs are not used. The engine routes from the inventory where it already sits. Moving stock is a placement question (see regional demand forecasting in 3.4), not a routing one.
 - International shipping is excluded. It adds customs and duty costs that the rate card does not model.
+
+1.6 Dependent systems
+
+The engine takes its inputs from other systems. The prototype replaces each one with fabricated data.
+
+| System | What the engine needs from it | Prototype stand-in |
+|---|---|---|
+| Client ordering system | The order: item, quantity, destination, order time, and promised delivery date | Sample orders in `sample_data.py` |
+| Carrier system | Services, transit times, and cost by region distance | A fixed rate card (live carrier rates are a non-goal, see 1.5) |
+| Item catalog | Item identity and any limits on how it ships | SKU only; no dimensions or ship-alone rules |
+| Inventory management | Units on hand per FC and the reservations against them | In-memory counts, assumed correct at decision time (see Open Question 8 in 6.0) |
+| Boxing system | Package size and weight, which set the cost and eligible services | Not modeled; one item, one package, priced by service and region only |
 
 2.0 CURRENT PROBLEM
 2.1 Current-State Example
