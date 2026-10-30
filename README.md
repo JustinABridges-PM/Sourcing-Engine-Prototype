@@ -5,7 +5,9 @@ Case Study
 ShipBob supports thousands of ecommerce brands through a network of 60+ fulfillment centers across the US, Canada, the UK, the EU, and Australia, processing roughly 100 million orders annually. The value of that network depends on the sourcing decision made for each order, and that decision is getting harder: 58.65% of brands already use more than one fulfillment center, and 43.99% plan to add more in 2026.
 
 1.1 PROBLEM STATEMENT 
-When an order is placed, the sourcing decision determines whether the shopper receives it on the promised date and what the merchant pays to ship it. With multiple fulfillment centers, an order can be assigned to one that cannot meet the promised date, or to one that meets it at a higher cost than necessary. Merchants have little visibility into why a fulfillment center was chosen or what the alternative would have cost.
+When an order is placed, the sourcing decision determines whether the shopper receives it on the promised date and what the merchant pays to ship it.
+Fulfillment commitments have traditionally been expressed as an SLA, a fixed commitment such as shipping within a set number of days. An SLA says little about when an order arrives, because arrival also depends on which fulfillment center ships it and which service it uses. This design moves from SLA-based commitments toward an estimated date of delivery (EDD), calculated for each fulfillment center and service option and compared against the date promised to the shopper.
+With multiple fulfillment centers, an order can be assigned to one that cannot meet the promised date, or to one that meets it at a higher cost than necessary. Merchants have little visibility into why a fulfillment center was chosen or what the alternative would have cost.
 
 1.2 CUSTOMER
 Primary customer: Merchants (the brands ShipBob fulfills for). Merchants make the delivery promise to their shoppers, so they depend on the sourcing engine to make that promise achievable and to show what it costs. Reliable delivery dates at a controlled shipping cost build merchant trust in ShipBob.
@@ -13,24 +15,30 @@ Secondary customer: Supply chain systems and operations teams. Downstream system
 End customer: Shoppers who are given a delivery date at checkout and expect to receive their order on it.
 
 1.3 GLOSSARY 
-| **Capacity-Based Routing** | Deprioritize an FC that has hit its daily order limit. |
-| **EDD** | Estimated date of delivery. |
-| **Fully Splittable** | The order has no restrictions on how many packages or fulfillment locations it can be filled from. |
+| **At-Risk Order** | An order for which no FC and service can arrive by the promised date. The engine ships the earliest option, flags the order, and records a revised EDD. |
+| **Available Inventory** | Units on hand minus units already reserved. |
+| **Baseline A** | The current rule: ship from the closest FC with stock, using Ground. |
+| **Baseline B** | The fastest-service rule: always ship the fastest service from the FC that can arrive soonest. |
+| **Capacity-Based Routing** | Skip an FC that has reached its daily order limit. |
+| **Cost Cap** | The most a merchant will spend on shipping one order. Options above it are removed before ranking, even if they are the only way to meet the promise. |
+| **Cost per On-Time Delivery** | Total shipping cost divided by the number of orders delivered on time. |
+| **Cutoff Time** | The latest time an order can be handed off for an FC and service to ship that day. Later orders ship the next day, which adds a day to the EDD. The handling buffer is the minimum time before the cutoff needed to pick and pack. |
+| **Decision Record** | The explanation saved for each decision: the chosen option, each rejected option and its reason, the cost of alternatives, and the promise premium. |
+| **EDD** | The estimated date a package will arrive, calculated from the ship date and transit time. The engine compares each option's EDD to the promised delivery date. |
+| **FC** | Fulfillment center. |
 | **In-Region Fulfillment** | An order fulfilled from an FC in the same region as the shopper. |
 | **On-Time Delivery Rate** | Share of orders delivered on or before the promised date. |
-| **Partially Splittable** | Certain criteria allow the order to be split and fulfilled from multiple places. |
-| **Promised Delivery Date** | The date shown to the shopper at checkout. |
-| **Ranked Sourcing** | A merchant-defined ordering of which FCs to try first. |
-| **Rule Cascade** | Criteria applied in order, each acting as a tiebreaker for the one before. |
-| **Ship Alone** | The item cannot be shipped with anything else, usually due to size or weight. |
-| **Ship as Is** | The item can ship in the container it is already packaged in. |
-| **Shipping Zone** | A distance-based pricing band between the shipping origin and destination. |
+| **Promised Delivery Date** | The delivery date the merchant shows the shopper at checkout. The engine's primary objective is to meet it. |
+| **Promise Premium** | The chosen option's cost minus the cheapest option overall, including late ones. |
+| **Rate Card** | The cost and transit days for each service, by region distance. |
+| **Region** | West, Central, or East. Distance between regions sets the cost and time multiplier: 1x in the same region, 2x one region away, 3x two regions away. |
+| **Re-shop** | Running the decision again for an order after its assigned FC cannot fill it. |
+| **Service Level** | Ground, Air, or Express, each with its own cost and transit time on the rate card. |
 | **Ship-Together Constraint** | Items must ship in the same package or from the same node. |
 | **Single-Node Fulfillment** | The whole order ships from one location. |
-| **SLA** | A fixed service commitment, such as shipping within a set number of days. |
-| **Sourcing / Order Routing** | The decision of which FC ships an order. |
+| **SLA** | A fixed service commitment, such as shipping within a set number of days. This design moves from SLA-based commitments toward EDD-based decisions. |
+| **Sourcing / Order Routing** | The decision of which FC and which shipping service fulfill an order. |
 | **Split Shipment** | One order fulfilled from more than one location. |
-| **Unsplittable** | An order that must be sourced as a single package, no matter what. |
 
 
 1.4 GOALS (SCOPE)
