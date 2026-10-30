@@ -139,7 +139,7 @@ flowchart TD
     K -->|Above cap| R1[Remove and record reason]
     K -->|Under cap| D{Arrives by promised date?}
     D -->|No| R2[Reject and record reason]
-    D -->|No option meets date| X2[Edge case: ship earliest option, flag at risk]
+    R2 -->|No option left| X2[Edge case: ship earliest option, flag at risk]
     D -->|Yes| E[3. Rank by cost]
     E --> F[4. Select lowest-cost option and record explanation]
     F --> J{Another order needs the same unit?}
@@ -229,6 +229,7 @@ The MVP handles edge cases when they happen. These ideas aim to make them happen
 Inventory confidence first, because it uses data we already collect. Merchant settings next, because it is small and unlocks per-client feedback. Forecasting third, because it has the largest impact but needs the most data. Split shipments last.
 
 4.0 SUCCESS METRICS
+Metrics follow the priority order of the goals in 1.4. In the prototype, each one is computed by running the engine and two comparison rules over the same batch of sample orders, with arrival dates predicted from the rate card. In production, they would use actual delivery dates.
 - **Target:** The engine must beat Baseline A on the same orders. On the 14-order sample batch it delivers 13 of 14 on time (93%), against 36% for Baseline A and 100% for Baseline B. The production target is set after a pilot on real orders.
 
 **Comparison rules**
@@ -236,8 +237,8 @@ Inventory confidence first, because it uses data we already collect. Merchant se
 - **Baseline B, fastest-service rule:** Always ship the fastest service from the FC that can arrive soonest.
 
 ### Primary: On-time delivery rate
+- **Target:** The engine must beat Baseline A on the same orders. On the 14-order sample batch it delivers 13 of 14 on time (93%), against 36% for Baseline A and 100% for Baseline B. The production target is set after a pilot on real orders.
 - **Definition:** Orders arriving on or before the promised date ÷ total orders.
-- **Target:** [x], set after a baseline run.
 
 **Example: the 2.1 order promised Nov 3.** Atlanta is out of stock and the promise is Nov 3 instead of Nov 2. A variation like this shows why both baselines are reported.
 
@@ -248,7 +249,8 @@ Inventory confidence first, because it uses data we already collect. Merchant se
   - Against A, the engine's cost per order may rise, since it upgrades the service to meet the date. Cost per on-time delivery shows whether that spend is worth it.
   - Against B, the engine should cost less, since it picks the cheapest option that still meets the date.
 - **Promise premium (per order):** Chosen option's cost minus the cheapest option overall, including late ones. Shown to the merchant on every decision. In the 2.1 example it is $20. On the sample batch the average is $8.93 per order.
-- **Target:** At or below both baselines. On the sample batch the engine costs $17.31 per on-time delivery, against $22.00 for Baseline A and $23.57 for Baseline B. The production target is set after a pilot on real orders.- Over a batch, these figures are totals across all orders. The prototype reports them for the 14 sample orders, and the results are in 5.5. The sample includes deliberate hard cases, so treat them as a check on the logic, not a forecast.
+- **Target:** At or below both baselines. On the sample batch the engine costs $17.31 per on-time delivery, against $22.00 for Baseline A and $23.57 for Baseline B. The production target is set after a pilot on real orders.
+**Example: the 2.1 order promised Nov 3.** Atlanta is out of stock and the promise is Nov 3 instead of Nov 2. A variation like this shows why both baselines are reported.
 The order from 2.1, with Atlanta out of stock, but promised by **Nov 3** instead of Nov 2. A variation like this shows why both baselines are reported.
 
 | Rule | Choice | Cost | Arrives | On time? | Cost per on-time delivery | Promise premium |
@@ -258,6 +260,7 @@ The order from 2.1, with Atlanta out of stock, but promised by **Nov 3** instead
 | **Engine** | **Dallas Air** | **$20** | **Nov 3** | **Yes** | **$20** | **$10** |
 
 - The engine beats **Baseline A** on the primary metric. A is cheaper per order but misses the date, so it has no on-time delivery to divide its cost by.
+- Over a batch, these figures are totals across all orders. The prototype reports them for the 14 sample orders, and the results are in 5.5. The sample includes deliberate hard cases, so treat them as a check on the logic, not a forecast.
 - The engine beats **Baseline B** on cost. Both meet the date, but the engine picks the cheapest option that does so, saving $10.
 - Over a batch, these figures are totals across all orders, and the prototype reports them for the sample orders.
 
@@ -303,7 +306,7 @@ Omit the order IDs after `--explain` to print the record for every order.
 | 2. Options | `build_options` | Prices every FC x service with the rate card (1x/2x/3x on cost and days). Ship date is today if the order reaches the FC before the cutoff minus the handling buffer, otherwise tomorrow |
 | 3. Rank | `_candidates` | Per FC, the cheapest option that meets the date and the cap. Across FCs: cost, then earlier arrival, then closer FC |
 | 4. Record | `Decision.explain` | Chosen option, every rejected option with a reason, promise premium, revised EDD if at risk |
-| 5. Reserve | `route_order` | Reserves one unit at the chosen FC |
+| 5. Reserve | `route_order` | Reserves one unit at the chosen FC. Competing orders go through route_batch first|
 
 ## 5.2 Two Kinds of Logic: Design Decision Tree vs. Client Exception Scenarios
 
@@ -377,7 +380,6 @@ It does not remove the risk from other factors:
 - This is fabricated data. It shows the logic behaves as specified, not how it would perform on real orders.
 
 6.0 Open Questions
-6.0 OPEN QUESTIONS
 
 These are decisions the prototype assumes or leaves open. Each one is resolved before the stage in the last column.
 
