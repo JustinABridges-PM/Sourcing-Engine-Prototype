@@ -8,22 +8,32 @@ ShipBob supports thousands of ecommerce brands through a network of 60+ fulfillm
 When an order is placed, the sourcing decision determines whether the shopper receives it on the promised date and what the merchant pays to ship it. With multiple fulfillment centers, an order can be assigned to one that cannot meet the promised date, or to one that meets it at a higher cost than necessary. Merchants have little visibility into why a fulfillment center was chosen or what the alternative would have cost.
 
 1.2 CUSTOMER
-Primary customer: Merchants (the brands ShipBob fulfills for). [Add 1-2 sentences on why: the engine must give the merchant reliable delivery dates and visibility into cost tradeoffs.]
-Secondary customer: [Supply chain / operations teams. Add: they need enough lead time to resolve at-risk orders before the promised date is missed.]
-End customer: Shoppers who receive the order on the promised date.
+Primary customer: Merchants (the brands ShipBob fulfills for). Merchants make the delivery promise to their shoppers, so they depend on the sourcing engine to make that promise achievable and to show what it costs. Reliable delivery dates at a controlled shipping cost build merchant trust in ShipBob.
+Secondary customer: Supply chain systems and operations teams. Downstream systems execute the sourcing decision, and operations teams act on orders the engine flags as at risk, which requires enough lead time to resolve them before the promised date.
+End customer: Shoppers who are given a delivery date at checkout and expect to receive their order on it.
 
-1.3 GLOSSARY (drafted)
-FC: Fulfillment center.
-Sourcing / order routing: The decision of which FC ships an order.
-Promised delivery date: The date shown to the shopper at checkout.
-EDD: Estimated date of delivery.
-SLA: A fixed service commitment, such as shipping within a set number of days.
-On-time delivery rate: Share of orders delivered on or before the promised date.
-Shipping zone: A distance-based pricing band between the shipping origin and destination.
-In-region fulfillment: An order fulfilled from an FC in the same region as the shopper.
-[Add any terms used later.]
+1.3 GLOSSARY 
+| **Capacity-Based Routing** | Deprioritize an FC that has hit its daily order limit. |
+| **EDD** | Estimated date of delivery. |
+| **Fully Splittable** | The order has no restrictions on how many packages or fulfillment locations it can be filled from. |
+| **In-Region Fulfillment** | An order fulfilled from an FC in the same region as the shopper. |
+| **On-Time Delivery Rate** | Share of orders delivered on or before the promised date. |
+| **Partially Splittable** | Certain criteria allow the order to be split and fulfilled from multiple places. |
+| **Promised Delivery Date** | The date shown to the shopper at checkout. |
+| **Ranked Sourcing** | A merchant-defined ordering of which FCs to try first. |
+| **Rule Cascade** | Criteria applied in order, each acting as a tiebreaker for the one before. |
+| **Ship Alone** | The item cannot be shipped with anything else, usually due to size or weight. |
+| **Ship as Is** | The item can ship in the container it is already packaged in. |
+| **Shipping Zone** | A distance-based pricing band between the shipping origin and destination. |
+| **Ship-Together Constraint** | Items must ship in the same package or from the same node. |
+| **Single-Node Fulfillment** | The whole order ships from one location. |
+| **SLA** | A fixed service commitment, such as shipping within a set number of days. |
+| **Sourcing / Order Routing** | The decision of which FC ships an order. |
+| **Split Shipment** | One order fulfilled from more than one location. |
+| **Unsplittable** | An order that must be sourced as a single package, no matter what. |
 
-1.4 GOALS (SCOPE) (drafted)
+
+1.4 GOALS (SCOPE)
 - Primary: Meet the promised delivery date, measured by on-time delivery rate.
 - Secondary: Within that constraint, select the lowest-cost option.
 - Show the cost of each decision, including the cheapest feasible alternative, so merchants can see the tradeoff.
@@ -33,11 +43,15 @@ In-region fulfillment: An order fulfilled from an FC in the same region as the s
 - (Proposed) Flag orders that no FC can deliver on time, early enough for the supply chain team to act.
 
 1.5 NON-GOALS (OUT OF SCOPE)
-[List what the MVP deliberately excludes and why. Candidates to consider: split shipments, live carrier rate lookups, inventory rebalancing across FCs, international routing, real-time inventory sync.]
+- Split shipments will be excluded.
+- Live carrier rates will not be looked up
+- Inventory transfers between FC will not be used.
+- No international shipping
+- 
 
 2.0 CURRENT PROBLEM
 2.1 Current-State Example
-[One concrete order: what the shopper was promised, which FC was chosen, what went wrong or cost more than necessary.]
+We will assume a facility in PHX arizona, Dallas Texas, and Atlanta Georgia. Each facility has equal capacity to handle orders and equal amount of inventory. 
 
 2.2 Business Value
 [Quantify what better routing is worth. Candidate figures: Inventory Placement Program merchants saw a 15% reduction in shipping zones and a 16% increase in in-region fulfillment in 2025.]
@@ -74,47 +88,3 @@ Input / Owner / What happens when it is wrong
 
 6.0 OPEN QUESTIONS
 [Unresolved items. Known so far: cost-reduction baseline; how the promised date interacts with ShipBob's existing delivery-date product.]
-
-
-
-
-Assumptions 
-  Operational Landscape: 
-    -Since we know that clients are looking to have minimum 2 locations of freight stored and almost half plan to add more. With that in mind, we will assume freight is stored at multiple locations between the range of 2-4. We will go with 3 for the sake of design. 
-    -The US will be split the US into West, Central, and East and set a warehouse representing each region.
-    -Order ingestion per building will be assumed to be around the same average. For initial scope we will say 60k a day. 
-    -Expectation is that the average order will take 2 hours to process so we should not drop orders in after this window. 
-  Carrier Contracts
-    -Carrier contracts across the national brands will be considered to all have the same available options. 
-    -Carriers across regional brands will be considered to all have the same available options. 
-  Limitations
-    -We will focus the roll out within the united states and phase the north american region (Mexico / Canada) as phase 2. With full international being phase 3. 
-  
-Who are the stakeholders
-  -Clients ordering system: 
-  -Carrier system
-  -Label Generation
-  -WMS
-  -Inventory 
-  -Item Catalog
-Metrics
-  -Internal Metrics
-  -Client Metrics
-  -Downstream metrics to monitor
-
-3. Design
-Requirements
-  -We must provide an accurate and achievable Promised Delivery Date to the end customer.
-Customer
-User stories
-
-5. Test
-Standard Use Case (1st 
-1. Single line Unit
-2. Single Line multi unit
-3. Multi Line Multi Unit
-4. 
-Exception scenarios
-1. Inventory shorted to 0 in building 1 and needs to reshop to building 2
-2. 
-
