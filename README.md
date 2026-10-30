@@ -243,5 +243,99 @@ Stop or roll back if any of these hold:
 - Promise premium exceeds [limit set by ShipBob or the merchant].
 - In production, predicted and actual on-time rates diverge by more than [x].
 
-Testing 
+5.0 
 Run python test_engine.py or python run_demo.py from the folder. Add --explain to run_demo.py to see the full decision record for each order.
+```
+python test_engine.py                        # 20 tests; reproduces the worked examples in 2.1 and 3.3
+python run_demo.py                           # sample batch, both baselines, metrics, kill-threshold checks
+python run_demo.py --explain O-1005 O-1010   # full decision record for chosen orders
+```
+
+| File | Purpose |
+|---|---|
+| `engine.py` | Rate card, eligibility, option building, ranking, decision records, cost cap, at-risk flagging, joint resolution, re-shop |
+| `sample_data.py` | 3 FCs, 4 merchants (different sizes, footprints, caps), 14 orders |
+| `metrics.py` | Baselines A and B, on-time rate, cost per on-time delivery, kill-threshold checks |
+| `run_demo.py` | Runs everything and writes `decisions.json` |
+| `test_engine.py` | Worked examples as assertions |
+
+## 5.1 How the Code Follows the Decision Flow
+
+| Step | Code | What it does |
+|---|---|---|
+| 1. Eligibility | `build_options` | Drops FCs where on hand minus reserved is below the order quantity, or daily capacity is used up, and records the reason |
+| 2. Options | `build_options` | Prices every FC x service with the rate card (1x/2x/3x on cost and days). Ship date is today if the order reaches the FC before the cutoff minus the handling buffer, otherwise tomorrow |
+| 3. Rank | `_candidates` | Per FC, the cheapest option that meets the date and the cap. Across FCs: cost, then earlier arrival, then closer FC |
+| 4. Record | `Decision.explain` | Chosen option, every rejected option with a reason, promise premium, revised EDD if at risk |
+| 5. Reserve | `route_order` | Reserves one unit at the chosen FC |
+
+## 5.2 Two Kinds of Logic: Design Decision Tree vs. Client Exception Scenarios
+
+The prototype separates the rules that apply to every order from the situations that vary by client or by day.
+
+**Design decision tree (built, tested).** The same rules for every merchant and order. They come from 3.2 and the edge cases in 3.3.
+
+| Rule | Behavior |
+|---|---|
+| Promise first | Options arriving after the promised date are rejected with a reason |
+| Cost second | Cheapest remaining option wins; ties go to earlier arrival, then the closer FC |
+| Out of stock | FC removed before options are built |
+| No option meets the date | Earliest arrival ships, order flagged at risk, revised EDD recorded |
+| FC cannot fill | Re-shop from the current time without that FC; cutoffs apply |
+| Competing orders | Resolved together; see 5.4 |
+
+**Client exception scenarios (partly built, mostly future).** Situations that depend on a specific merchant's setup or behavior. They change the inputs to the decision tree rather than the tree itself.
+
+| Scenario | Status in prototype |
+|---|---|
+| Merchant cost cap | Built. Cap is a per-merchant input; options above it are removed before ranking and the cap overrides the promise |
+| Hot region (one region sells most of a product) | Not built. Needs the forecasting in 3.4 |
+| Merchant-defined FC preference (ranked sourcing) | Not built |
+| Merchant default service other than Ground | Not built; Baseline A assumes Ground |
+| Per-client tuning from feedback (premium limit, cap, tie-breaks) | Not built. Premium limit is a single global placeholder |
+| Ship-together or ship-alone items | Out of scope (single-item orders) |
+
+The rule for adding a new client exception: it must be expressible as a filter (removes options), an input (changes cost, date, or capacity), or a ranking change, and it must appear in the decision record. If it cannot, it belongs in the decision tree and needs a design review.
+
+## 5.3 Assumptions and Placeholders
+
+| Item | Value in prototype | Type | Where to change |
+|---|---|---|---|
+| Service speed | Ground 3 days, Air 2 days, Express 1 day (same region) | Decision (from 2.1) | `BASE_RATES` |
+| Region multipliers | 1x, 2x, 3x on cost and days; Dallas never above 2x | Decision (from 2.1) | `RateCard` |
+| Dallas Ground cutoff | 2 PM trailer | Decision (from 3.3) | `sample_data.make_fcs` |
+| Air and Express cutoffs | None; ship same day | **Placeholder** | `service_cutoffs` |
+| Handling buffer | 60 minutes before a cutoff | **Placeholder** | `handling_buffer_minutes` |
+| Promise premium limit (kill check) | $15 average per order | **Placeholder** | `metrics.kill_checks` |
+| Calendar days | No weekends or holidays | Simplification | `ship_date_for` |
+| Order shape | One SKU, one unit, one package | Simplification (non-goal: split shipments) | |
+| On-time measure | Planned arrival date, no carrier variance | Simplification | |
+| Merchant default service | Ground (Baseline A only) | Assumption | `metrics.baseline_a` |
+
+**Open question: Air cutoff.** The re-shop example in 3.3 has Dallas Air arriving Nov 4 after a 1:30 PM re-shop. That is only true if Air also misses a cutoff that day. With no Air cutoff, Air ships Oct 30 and arrives Nov 3. The prototype uses Nov 3. Either answer works for the engine; the README and the code just need to agree.
+
+## 5.4 Joint Resolution of Competing Orders: What It Solves and What It Risks
+
+Step 5 reserves stock one order at a time, which can hand the last unit to an order that did not need it (3.3, competing orders). The prototype resolves orders that compete for the same stock or capacity together: most promises kept, then most orders filled, then lowest total cost, then the earlier order. This solves the competing-orders edge case on the sample data and reproduces the $45 result in 3.3.
+
+It does not remove the risk from other factors:
+
+- **Batch window.** Joint resolution only helps orders that are decided together. An order placed after the first one was already reserved is first come, first served. The window length is a product decision and the prototype treats the whole sample file as one window.
+- **Scale.** Exact search is used up to 8 competing orders; beyond that a greedy pass (tightest promise first) is used and may keep fewer promises.
+- **Ties and fairness.** "Most promises, then lowest cost" can leave one order at risk (O-1005 in the sample) when a different rule, such as tightest promise first, would pick differently. The earlier order wins remaining ties.
+- **Stale inventory.** Stock counts are assumed correct at decision time. A damaged unit found after reservation goes through re-shop.
+- **Merchant impact.** An order that loses a contested unit may cost its merchant more. The decision record says why, but merchants have not seen this behavior.
+- **Multi-unit and multi-item orders** are not modeled.
+
+## 5.5 First-Run Findings (Sample Batch of 14 Orders)
+
+| | On-time | Spend | $ per on-time delivery |
+|---|---|---|---|
+| Baseline A (closest FC, Ground) | 5/14 (36%) | $110 | $22.00 |
+| Baseline B (fastest service) | 14/14 (100%) | $330 | $23.57 |
+| Engine | 13/14 (93%) | $225 | $17.31 |
+
+- The engine clears every kill threshold on this data: higher on-time rate than A, lower cost per on-time delivery than A and B, 100% explanation completeness, 0 cap exceptions.
+- Baseline B reaches 14/14 but spends $105 more than the engine for one extra on-time order, and ships one order above its merchant's cap.
+- The one at-risk order (O-1005) comes from a $25 cap plus three orders competing for two Atlanta units. Its record states that meeting the date would have needed a $30 option.
+- This is fabricated data. It shows the logic behaves as specified, not how it would perform on real orders.
