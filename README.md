@@ -243,4 +243,5 @@ Stop or roll back if any of these hold:
 - Promise premium exceeds [limit set by ShipBob or the merchant].
 - In production, predicted and actual on-time rates diverge by more than [x].
 
-
+Testing 
+Run python test_engine.py or python run_demo.py from the folder. Add --explain to run_demo.py to see the full decision record for each order.
