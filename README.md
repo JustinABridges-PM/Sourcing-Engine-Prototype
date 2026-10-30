@@ -47,44 +47,192 @@ End customer: Shoppers who are given a delivery date at checkout and expect to r
 - Live carrier rates will not be looked up
 - Inventory transfers between FC will not be used.
 - No international shipping
-- 
 
 2.0 CURRENT PROBLEM
 2.1 Current-State Example
-We will assume a facility in PHX arizona, Dallas Texas, and Atlanta Georgia. Each facility has equal capacity to handle orders and equal amount of inventory. 
+
+Network: Facilities in Phoenix (West), Dallas (Central), and Atlanta (East), with equal capacity and equal starting inventory.
+Rate card: Base rates apply within a region: Ground $5 / 3 days, Air $10 / 2 days, Express $15 / 1 day. Cost and transit time double one region away and triple two regions away. Dallas, in the middle, never exceeds 2x.
+Current routing rule (assumed): Ship from the closest FC with stock, using the merchant's default service (Ground).
+Order: A shopper in Georgia (East) places an order on Oct 30. The merchant promises delivery by Nov 2.
+Trigger: Atlanta sold its last unit of the item to an earlier order.
+What the current rule does: The next closest FC with stock is Dallas, which ships by Ground for $10, 6 days. The order arrives Nov 5, which is 3 days late.
+What a better decision would have been: Ship from Dallas by Express for $30, 2 days. The order arrives Nov 1 and meets the promise. Air ($20, 4 days) would still arrive Nov 3, one day late. Phoenix Express also meets the date (Nov 2) but costs $45.
+Result: Today the merchant misses the promised date and has no visibility into the alternatives. Protecting the promise costs $20 more than the late option ($30 vs. $10).
 
 2.2 Business Value
-[Quantify what better routing is worth. Candidate figures: Inventory Placement Program merchants saw a 15% reduction in shipping zones and a 16% increase in in-region fulfillment in 2025.]
+
+The value of the engine follows the goals in section 1.4, in priority order. Each point is shown using the order in 2.1.
+
+| Priority | Value driver | Today (2.1) | With the sourcing engine |
+|---|---|---|---|
+| 1 | Promise kept | The order ships from Dallas by Ground and arrives Nov 5, 3 days after the Nov 2 promise. | Of the six options with stock (two FCs, three services each), only Dallas Express and Phoenix Express meet Nov 2. The engine rejects the other four and ships on one of the two that do. |
+| 2 | Cost control | Only one option is considered, so cost is never compared. | Both options that meet the date are compared. Dallas Express costs $30 and Phoenix Express costs $45, so the engine chooses Dallas Express and spends $15 less. |
+| 3 | Decision visibility | The merchant sees the outcome but not the alternatives. | The merchant sees the chosen option, each rejected option with the reason (for example, Dallas Air arrives Nov 3, one day late), and the cost of each. This shows that protecting the promise costs $20 more than the late option ($30 vs. $10). |
+| 4 | Earlier intervention | The merchant and operations learn about the problem when the package is late. | If the promise had been Oct 31, no option could meet it, since the fastest possible arrival is Nov 1. The engine flags the order at the time it is placed, so operations can act before the date is missed. |
+
+Summary: In this one order, the engine turns a late delivery with no visibility into an on-time delivery at the lowest feasible cost, with the tradeoff shown to the merchant.
 
 3.0 PROPOSED SOLUTION
-3.1 Inputs and Data Contracts
-Input / Owner / What happens when it is wrong
-- Order (client ordering system): [owner] / [failure behavior]
-- Carrier rates and transit times (carrier system): [owner] / [failure behavior]
-- Item catalog (SKU, dimensions, weight): [owner] / [failure behavior]
-- Inventory by FC: [owner] / [failure behavior]
-- Boxing / package selection: [owner] / [failure behavior]
+3.1 | Goal (from 1.4) | Capability | Where it happens (Decision Flow step) |
+|---|---|---|
+| Meet the promised date | Reject any FC and service that cannot arrive by the promised date | Step 2 |
+| Lowest cost within that constraint | Rank the remaining options by cost | Step 3 |
+| Show the cost of each decision | Record the cheapest feasible alternative and the cost difference | Step 4 |
+| Explainable decisions | Record why each rejected option was rejected | Step 4 |
+| Handle hard cases | Out of stock, competing orders, no feasible option | 
 
 3.2 Decision Flow
-[Ordered rules, for example: 1) exclude FCs that cannot fulfill; 2) exclude FCs that cannot meet the promised date; 3) rank remaining FCs by cost; 4) record the explanation. Add what happens when no FC qualifies.]
+**Inputs per order:** destination region, item and quantity, order date, promised delivery date.
+**Reference data:** inventory by FC, rate card (cost and transit days by service and region distance), FC capacity.
+
+### Steps
+
+| Step | Rule | If it fails |
+|---|---|---|
+| **1. Check eligibility** | Keep only FCs with enough stock for the item (net of units already reserved) and capacity remaining. | No eligible FC: see Edge Cases (no stock anywhere). |
+| **2. Build and filter options** | For each eligible FC and each service (Ground, Air, Express), calculate cost and arrival date (order date + transit days). Reject any option that arrives after the promised date, and record the reason. | No option meets the date: see Edge Cases (no feasible option, flag the order). |
+| **3. Rank by cost** | Sort the remaining options by cost, lowest first. Ties: earlier arrival wins, then the FC closer to the shopper. | None. |
+| **4. Select and record** | Choose the top option. Record the chosen option, every rejected option with its reason, and the promise premium: the chosen option's cost minus the cheapest option of any kind, including late ones. | None. |
+| **5. Reserve inventory** | Reserve one unit at the chosen FC so the next order sees the updated stock. | Two orders competing for the last unit: see Edge Cases. |
+
+### Flow diagram
+
+```mermaid
+flowchart TD
+    A[New order] --> B[1. Keep FCs with stock and capacity]
+    B -->|None| X1[Edge case: no stock anywhere]
+    B --> C[2. Build FC x service options]
+    C --> D{Arrives by promised date?}
+    D -->|No| R[Reject and record reason]
+    D -->|Yes| E[3. Rank by cost]
+    E -->|No options remain| X2[Edge case: flag order as at risk]
+    E --> F[4. Select lowest-cost option and record explanation]
+    F --> G[5. Reserve inventory]
+    G --> H[Decision record]
+```
+
+### Worked example (the order from 2.1)
+
+Order placed Oct 30, shopper in the East, promised Nov 2.
+
+1. **Eligibility:** Atlanta has no stock and is removed. Dallas and Phoenix remain.
+2. **Options:**
+
+| Option | Cost | Arrives | Result |
+|---|---|---|---|
+| Dallas, Ground | $10 | Nov 5 | Rejected: 3 days late |
+| Dallas, Air | $20 | Nov 3 | Rejected: 1 day late |
+| **Dallas, Express** | **$30** | **Nov 1** | **Meets date** |
+| Phoenix, Ground | $15 | Nov 8 | Rejected: 6 days late |
+| Phoenix, Air | $30 | Nov 5 | Rejected: 3 days late |
+| Phoenix, Express | $45 | Nov 2 | Meets date |
+
+3. **Rank:** Dallas Express ($30) is below Phoenix Express ($45).
+4. **Select and record:** Dallas Express is chosen. Promise premium = $30 − $10 (Dallas Ground, the cheapest option overall) = **$20**.
+5. **Reserve:** One unit is reserved at Dallas.
 
 3.3 Edge Cases
-- FC out of stock: [behavior]
-- Two orders competing for the last unit: [behavior]
-- No FC can meet the promised date: [behavior]
-- [Other cases]
+| Case | Trigger | Rule | What is recorded |
+|---|---|---|---|
+| **FC out of stock** | Closest FC has no available units (on hand minus reserved) | Remove the FC and evaluate the remaining FC and service options through the normal flow | FC removed and why |
+| **FC cannot fill after assignment** | After assignment, the FC finds the order cannot be filled (for example, damaged items) | Re-run the flow from the current time, excluding that FC. Arrival uses the FC's cutoff time: if the order misses the cutoff, shipping moves to the next day | Original assignment, reason for re-shop, new assignment |
+| **Competing orders** | Two orders need the last unit at an FC | Resolve the orders together. Choose the assignment that keeps the most promises, then the lowest total cost, then the earlier order | Both orders' options and why the unit went where it did |
+| **No option meets the date** | No FC and service arrives by the promised date | Ship the earliest-arriving option, flag the order as at risk, and record a revised EDD for the merchant and shopper to be notified | Revised EDD and the cost of the fastest option |
+| **Merchant cost cap** | Merchant sets a maximum shipping cost per order | Remove any option above the cap before ranking. The cap overrides the promise. If no remaining option meets the date, use the rule above. If nothing is under the cap, flag for merchant review | Options removed by the cap and what meeting the date would have cost |
+
+### Worked examples
+
+**Competing orders.** Atlanta has one unit left. Order A is promised Oct 31, and only Atlanta Express ($15, 1 day) can meet that. Order B is promised Nov 2, and either Atlanta Ground ($5) or Dallas Express ($30, arrives Nov 1) meets it.
+- First come, first served with B first: B takes Atlanta, and A misses its promise.
+- Rule: A gets Atlanta ($15), and B ships from Dallas Express ($30). Both promises are kept, for $45 total.
+
+**Cost cap.** Using the 2.1 order (promised Nov 2). With a $30 cap, Phoenix Express ($45) is removed, and Dallas Express ($30) is chosen. With a $25 cap, Dallas Express is also removed. Nothing meeting the date remains, so the engine ships the earliest-arriving option under the cap (Dallas Air, $20, arrives Nov 3), flags the order, and records the revised EDD.
+
+**Re-shop near the cutoff.** An order to Georgia is promised Nov 5. At 1:30 PM on Oct 30, Atlanta reports damaged items and the order re-shops to Dallas, whose Ground trailer leaves at 2 PM.
+- Makes the trailer: Dallas Ground, $10, arrives Nov 5.
+- Misses it: Ground ships Oct 31 and arrives Nov 6, one day late, so the engine picks Dallas Air ($20, 4 days, arrives Nov 4).
+- The handling buffer (the minimum time needed before cutoff to pick and pack) decides which case applies.
+
+### Deferred
+- **Hot region:** Routing can't fix inventory placed in the wrong region. The engine can expose out-of-region shipments by item and region, as an input to placement. See Future State.
+- **Per-client changes:** Keep merchant settings (cost cap, allowed services, FC preferences) separate from the rules, so the engine can vary per client without code changes. See Future State.
 
 3.4 Advanced / Future State
-[What you would build before this reaches a real merchant.]
+The MVP handles edge cases when they happen. These ideas aim to make them happen less often. None are built or validated in the prototype, and each lists what it would need first.
+
+### 1. Regional demand forecasting and placement guidance
+- **Problem it addresses:** Out-of-stock at the closest FC, and hot regions where stock sits far from demand. In the 2.1 example, Atlanta running out turned a $10 late shipment into a $30 on-time one. Routing cannot fix stock that is in the wrong place.
+- **What it needs:** Order history by item and shopper region, replenishment lead times, and FC capacity.
+- **Approach:** Forecast demand by item and region for each merchant, then recommend where to hold inventory. The first version is advisory: it recommends placement and does not move stock.
+- **How we'd know it worked:** Share of orders shipped from an in-region FC, stock-outs at the closest FC, and average promise premium per order.
+
+### 2. Inventory confidence and safety buffers
+- **Problem it addresses:** An FC cannot fill an order after assignment, for example because of damaged items. The count said available, but the unit was not.
+- **What it needs:** History of damage, adjustments, and count discrepancies by FC and item.
+- **Approach:** Treat available stock as on hand minus reserved units minus a safety buffer based on past discrepancies. FCs with unreliable counts get a larger buffer, so the engine prefers options it can trust.
+- **How we'd know it worked:** Share of orders re-shopped after assignment, and delivery delay caused by re-shops.
+- **Why it matters:** Routing is only as good as the inventory record it relies on.
+
+### 3. Merchant-level settings and a feedback loop
+- **Problem it addresses:** Merchants differ in cost caps, allowed services, and FC preferences. When a merchant questions a decision or a cost increase, we need evidence.
+- **What it needs:** A settings store for each merchant, kept separate from the routing rules, plus the decision records the engine already produces.
+- **Approach:** The engine reads each merchant's settings at decision time, so behavior changes per client without code changes. Decision records show what was chosen, what it cost, and what the alternatives were, and can be compared across similar merchants.
+- **How we'd know it worked:** Time to explain a decision to a merchant, and the share of decisions a merchant disputes.
+
+### 4. Split shipments
+- **Problem it addresses:** Orders where no single FC can meet the promise, which the MVP flags and ships late.
+- **What it needs:** Multi-item orders, a cost model for extra packages, and ship-together and packaging rules.
+- **Approach:** Keep single-node fulfillment as the default. Consider a split only when no single FC can meet the promise, and show the added cost.
+- **How we'd know it worked:** On-time rate for orders that would otherwise be flagged, and the extra shipping cost from splits.
+- **Risk:** Extra packages cost more, so splits should be the exception.
+
+### Suggested sequence
+Inventory confidence first, because it uses data we already collect. Merchant settings next, because it is small and unlocks per-client feedback. Forecasting third, because it has the largest impact but needs the most data. Split shipments last.
 
 4.0 SUCCESS METRICS
-- Primary: On-time delivery rate. Target: [x%]
-- Secondary: Shipping cost reduction versus [baseline to decide]
-- Supporting: Share of at-risk orders flagged before the promised date
-- Kill threshold: [condition under which you would stop or roll back]
+Metrics follow the priority order of the goals in 1.4. In the prototype, each one is computed by running the engine and two comparison rules over the same batch of sample orders, with arrival dates predicted from the rate card. In production, they would use actual delivery dates.
 
-5.0 ASSUMPTIONS AND SHORTCUTS
-[Everything fabricated or simplified in the prototype, and why.]
+**Comparison rules**
+- **Baseline A, current rule:** Ship from the closest FC with stock, using Ground.
+- **Baseline B, fastest-service rule:** Always ship the fastest service from the FC that can arrive soonest.
 
-6.0 OPEN QUESTIONS
-[Unresolved items. Known so far: cost-reduction baseline; how the promised date interacts with ShipBob's existing delivery-date product.]
+### Primary: On-time delivery rate
+- **Definition:** Orders arriving on or before the promised date ÷ total orders.
+- **Target:** [x%], set after a baseline run. At minimum, the engine must beat Baseline A on the same orders.
+
+### Secondary: Cost per on-time delivery
+- **Definition:** Total shipping cost ÷ orders delivered on time.
+- **Why this metric:** A rule can look cheap per order while delivering fewer orders on time. Cost per on-time delivery counts late orders against the rule that produced them.
+- **Reported against both baselines:**
+  - Against A, the engine's cost per order may rise, since it upgrades the service to meet the date. Cost per on-time delivery shows whether that spend is worth it.
+  - Against B, the engine should cost less, since it picks the cheapest option that still meets the date.
+- **Promise premium (per order):** Chosen option's cost minus the cheapest option overall, including late ones. Shown to the merchant on every decision. In the 2.1 example it is $20.
+- **Target:** [x], set after a baseline run.
+The order from 2.1, with Atlanta out of stock, but promised by **Nov 3** instead of Nov 2. A variation like this shows why both baselines are reported.
+
+| Rule | Choice | Cost | Arrives | On time? | Cost per on-time delivery | Promise premium |
+|---|---|---|---|---|---|---|
+| Baseline A (closest FC, Ground) | Dallas Ground | $10 | Nov 5 | No | Undefined (no on-time delivery) | n/a |
+| Baseline B (fastest service) | Dallas Express | $30 | Nov 1 | Yes | $30 | $20 |
+| **Engine** | **Dallas Air** | **$20** | **Nov 3** | **Yes** | **$20** | **$10** |
+
+- The engine beats **Baseline A** on the primary metric. A is cheaper per order but misses the date, so it has no on-time delivery to divide its cost by.
+- The engine beats **Baseline B** on cost. Both meet the date, but the engine picks the cheapest option that does so, saving $10.
+- Over a batch, these figures are totals across all orders, and the prototype reports them for the sample orders.
+
+### Supporting
+- **Explanation completeness:** Decisions that record the chosen option, every rejected option with a reason, and the cost of alternatives ÷ total decisions. Required: 100%.
+- **At-risk handling:** Orders with no option that meets the date, flagged at order time with a revised EDD. Measured as the share flagged before the promised date and the lead time between flag and promised date.
+- **Cap compliance:** No order ships on an option above the merchant's cost cap. Required: 0 exceptions.
+
+### Kill thresholds
+Stop or roll back if any of these hold:
+- On-time rate is not above Baseline A's on the same orders.
+- Cost per on-time delivery is above Baseline A's or Baseline B's.
+- Any decision lacks a complete explanation.
+- Any order ships above the merchant's cost cap.
+- Promise premium exceeds [limit set by ShipBob or the merchant].
+- In production, predicted and actual on-time rates diverge by more than [x].
+
+
